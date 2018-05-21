@@ -15,9 +15,35 @@ import org.junit.runner.RunWith;
 @RunWith(EasyMockRunner.class)
 public class DiscussionTest {
 
+	@TestSubject
+	private Discussion discussion = new Discussion();
 
+	@Mock
+	private Course courseMock;
+	
+	@Mock
+	private Comment commentMock;
 
-
-
+	@Test
+	public void testComment() {
+		
+		int initialSize = discussion.getNumberOfComments();
+			
+		expect(commentMock.save()).andReturn(true);
+		replay(commentMock);
+		discussion.addComment(commentMock);
+		assertEquals(initialSize + 1, discussion.getNumberOfComments());
+	}
+	
+	@Test
+	public void testCommentIfSavingFails() {
+		
+		int initialSize = discussion.getNumberOfComments();
+			
+		expect(commentMock.save()).andReturn(false);
+		replay(commentMock);
+		discussion.addComment(commentMock);
+		assertEquals(initialSize, discussion.getNumberOfComments());
+	}	
 
 }
