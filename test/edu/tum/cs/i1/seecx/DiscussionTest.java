@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
-
 @RunWith(EasyMockRunner.class)
 public class DiscussionTest {
 
@@ -46,4 +45,14 @@ public class DiscussionTest {
 		assertEquals(initialSize, discussion.getNumberOfComments());
 	}	
 
+	@Test
+	public void testStartCourseDiscussion() {
+		
+		Student student = new Student("Don","Trump","1950","MIS","MKT");
+
+		expect(courseMock.isDiscussionAllowed(student)).andReturn(true);
+		replay(courseMock);
+		assertTrue(discussion.startCourseDiscussion(courseMock,student,"Software Engineering"));
+	}		
+	
 }
